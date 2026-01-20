@@ -1,0 +1,25 @@
+.game-canvas {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(79, 195, 247, 0.3);
+}
+
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #0a0a14;
+  padding: 24px;
+}
+
+.preview-hint {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}

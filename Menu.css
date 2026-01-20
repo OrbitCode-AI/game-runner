@@ -1,0 +1,58 @@
+.menu {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+}
+
+.menu-content {
+  text-align: center;
+  padding: 48px;
+}
+
+.menu-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #4fc3f7;
+  margin: 0 0 16px;
+  text-shadow: 0 0 40px rgba(79, 195, 247, 0.5);
+}
+
+.menu-subtitle {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 8px;
+}
+
+.menu-highscore {
+  font-size: 18px;
+  color: #ffd93d;
+  margin: 0 0 32px;
+}
+
+.menu-button {
+  padding: 16px 48px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+  background: #4fc3f7;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.menu-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(79, 195, 247, 0.6);
+}
+
+.menu-hint {
+  margin-top: 24px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+}
