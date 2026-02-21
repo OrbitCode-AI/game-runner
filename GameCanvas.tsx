@@ -47,68 +47,68 @@ function GameCanvas({ onScore, onGameOver }: GameCanvasProps) {
     let nextObstacle = 100;
     let animationId: number;
 
-    const update = () => {
-      const game = gameRef.current!;
-      if (!game.running) return;
-
-      // Player physics
-      game.player.vy += 0.8; // gravity
+    // Update player gravity and ground collision
+    const updatePlayerPhysics = (game: NonNullable<typeof gameRef.current>) => {
+      game.player.vy += 0.8;
       game.player.y += game.player.vy;
-
       if (game.player.y >= GROUND - PLAYER_SIZE) {
         game.player.y = GROUND - PLAYER_SIZE;
         game.player.vy = 0;
         game.player.jumping = false;
       }
+    };
+
+    // Check AABB collision between player and obstacle
+    const checkCollision = (playerY: number, obs: { x: number; width: number; height: number }) => {
+      const px = 60, pw = PLAYER_SIZE - 10, ph = PLAYER_SIZE;
+      const ox = obs.x, oy = GROUND - obs.height, ow = obs.width, oh = obs.height;
+      return px < ox + ow && px + pw > ox && playerY < oy + oh && playerY + ph > oy;
+    };
+
+    // Score obstacle if it passed the player
+    const scoreIfPassed = (game: NonNullable<typeof gameRef.current>, obs: typeof game.obstacles[0]) => {
+      if (obs.x + obs.width < 60 && !obs.scored) {
+        obs.scored = true;
+        game.score += 10;
+        onScore(game.score);
+      }
+    };
+
+    // Move obstacles, score passed ones, remove off-screen, detect collisions
+    const updateObstacles = (game: NonNullable<typeof gameRef.current>): boolean => {
+      for (let i = game.obstacles.length - 1; i >= 0; i--) {
+        const obs = game.obstacles[i];
+        obs.x -= game.speed;
+        scoreIfPassed(game, obs);
+        if (obs.x < -50) { game.obstacles.splice(i, 1); continue; }
+        if (checkCollision(game.player.y, obs)) return true;
+      }
+      return false;
+    };
+
+    const update = () => {
+      const game = gameRef.current!;
+      if (!game.running) return;
+
+      updatePlayerPhysics(game);
 
       // Spawn obstacles
       nextObstacle -= game.speed;
       if (nextObstacle <= 0) {
-        const height = 30 + Math.random() * 40;
         game.obstacles.push({
           x: W,
           width: 30 + Math.random() * 20,
-          height,
+          height: 30 + Math.random() * 40,
         });
         nextObstacle = 150 + Math.random() * 200;
       }
 
-      // Update obstacles
-      for (let i = game.obstacles.length - 1; i >= 0; i--) {
-        game.obstacles[i].x -= game.speed;
-
-        // Score when passed
-        if (game.obstacles[i].x + game.obstacles[i].width < 60 && !game.obstacles[i].scored) {
-          game.obstacles[i].scored = true;
-          game.score += 10;
-          onScore(game.score);
-        }
-
-        // Remove off-screen
-        if (game.obstacles[i].x < -50) {
-          game.obstacles.splice(i, 1);
-        }
-
-        // Collision detection
-        const obs = game.obstacles[i];
-        if (obs) {
-          const playerBox = { x: 60, y: game.player.y, w: PLAYER_SIZE - 10, h: PLAYER_SIZE };
-          const obsBox = { x: obs.x, y: GROUND - obs.height, w: obs.width, h: obs.height };
-
-          if (
-            playerBox.x < obsBox.x + obsBox.w &&
-            playerBox.x + playerBox.w > obsBox.x &&
-            playerBox.y < obsBox.y + obsBox.h &&
-            playerBox.y + playerBox.h > obsBox.y
-          ) {
-            game.running = false;
-            onGameOver(game.score);
-            return;
-          }
-        }
+      if (updateObstacles(game)) {
+        game.running = false;
+        onGameOver(game.score);
+        return;
       }
 
-      // Increase speed over time
       game.speed = 6 + game.score / 100;
     };
 
