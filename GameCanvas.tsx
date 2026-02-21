@@ -29,8 +29,10 @@ function GameCanvas({ onScore, onGameOver }: GameCanvasProps) {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d')!;
-    const W = canvas.width = 800;
-    const H = canvas.height = 400;
+    canvas.width = 800;
+    canvas.height = 400;
+    const W = canvas.width;
+    const H = canvas.height;
     const GROUND = H - 60;
     const PLAYER_SIZE = 40;
 
