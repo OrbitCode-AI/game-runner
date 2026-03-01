@@ -1,25 +1,25 @@
-import { useVar } from 'orbitcode';
-import { GameCanvas } from './GameCanvas';
-import { HUD } from './HUD';
-import { Menu } from './Menu';
-import './styles.css';
+import { useVar } from 'orbitcode'
+import { GameCanvas } from './GameCanvas'
+import { HUD } from './HUD'
+import { Menu } from './Menu'
+import './styles.css'
 
 export default function App() {
-  const [gameState, setGameState] = useVar<'menu' | 'playing' | 'gameover'>('runnerState', 'menu');
-  const [score, setScore] = useVar('runnerScore', 0);
-  const [highScore, setHighScore] = useVar('runnerHighScore', 0);
+  const [gameState, setGameState] = useVar<'menu' | 'playing' | 'gameover'>('runnerState', 'menu')
+  const [score, setScore] = useVar('runnerScore', 0)
+  const [highScore, setHighScore] = useVar('runnerHighScore', 0)
 
   const handleStart = () => {
-    setScore(0);
-    setGameState('playing');
-  };
+    setScore(0)
+    setGameState('playing')
+  }
 
   const handleGameOver = (finalScore: number) => {
     if (finalScore > highScore) {
-      setHighScore(finalScore);
+      setHighScore(finalScore)
     }
-    setGameState('gameover');
-  };
+    setGameState('gameover')
+  }
 
   return (
     <div className="game-container">
@@ -47,5 +47,5 @@ export default function App() {
         />
       )}
     </div>
-  );
+  )
 }

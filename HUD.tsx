@@ -1,7 +1,7 @@
-import './HUD.css';
+import './HUD.css'
 
 interface HUDProps {
-  score: number;
+  score: number
 }
 
 function HUD({ score }: HUDProps) {
@@ -15,7 +15,7 @@ function HUD({ score }: HUDProps) {
         <span>SPACE / Click to Jump</span>
       </div>
     </div>
-  );
+  )
 }
 
 // Default export renders component in isolation for preview
@@ -24,7 +24,7 @@ export default function HUDPreview() {
     <div className="preview-container">
       <HUD score={1250} />
     </div>
-  );
+  )
 }
 
-export { HUD };
+export { HUD }

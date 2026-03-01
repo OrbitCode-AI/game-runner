@@ -1,11 +1,11 @@
-import './Menu.css';
+import './Menu.css'
 
 interface MenuProps {
-  title: string;
-  subtitle?: string;
-  highScore?: number;
-  onStart: () => void;
-  buttonText?: string;
+  title: string
+  subtitle?: string
+  highScore?: number
+  onStart: () => void
+  buttonText?: string
 }
 
 function Menu({ title, subtitle, highScore, onStart, buttonText = 'Start Game' }: MenuProps) {
@@ -23,7 +23,7 @@ function Menu({ title, subtitle, highScore, onStart, buttonText = 'Start Game' }
         <p className="menu-hint">Press SPACE or click to jump over obstacles</p>
       </div>
     </div>
-  );
+  )
 }
 
 // Default export renders component in isolation for preview
@@ -35,7 +35,7 @@ export default function MenuPreview() {
       highScore={500}
       onStart={() => alert('Game starting!')}
     />
-  );
+  )
 }
 
-export { Menu };
+export { Menu }
